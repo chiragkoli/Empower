@@ -25,10 +25,11 @@ def sendEmail():
         if request.json['emailId'] is not None:
 
             toaddr = request.json['emailId']  ## email id of the user
-            contact_add = "*****@gmail.com"  ## the email id of the support team
-            fromaddr = "*****@gmail.com"   ## the email id from where we are going to send the mail
-            mobile_number = request.json['mobile_number']
+            contact_add = "chirag.koli@here.com"  ## the email id of the support team
+            fromaddr = "chirag.koli@here.com"   ## the email id from where we are going to send the mail
             name = request.json['name']
+            problem = request.json['problem']
+
 
 
             # instance of MIMEMultipart
@@ -69,13 +70,13 @@ def sendEmail():
             msg.attach(p)
 
             # creates SMTP session
-            s = smtplib.SMTP('smtp.gmail.com', 587)
+            s = smtplib.SMTP('smtp-mail.here.com', 587)
 
             # start TLS for security
             s.starttls()
 
             # Authentication
-            s.login(fromaddr,"*******") # give your password here
+            s.login(fromaddr,"Ozqg@845") # give your password here
 
             # Converts the Multipart msg into a string
             text = msg.as_string()
@@ -87,11 +88,11 @@ def sendEmail():
             # instance of MIMEMultipart
             msg1 = MIMEMultipart()
             # storing the subject
-            msg1['Subject'] = "Query For Course Details"
+            msg1['Subject'] = "Query For Empower"
 
             # string to store the body of the mail
             body1 = "person with name {0} have some queries regarding our course details." \
-                   "Please reach to {0} at his mobile number {1} and email id {2}".format(name,mobile_number,toaddr)
+                   "Please reach to {0} at his Email id : {1} with problem/issue {2}".format(name,,toaddr,problem)
 
             # attach the body with the msg instance
             msg1.attach(MIMEText(body1, 'plain'))
@@ -119,4 +120,4 @@ if __name__ == "__main__":
     port = 5000
     httpd = simple_server.make_server(host, port, app)
     print("Serving on %s %d" % (host, port))
-    httpd.serve_forever()
+    httpd.serve_forever()	
